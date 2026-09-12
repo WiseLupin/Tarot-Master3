@@ -310,8 +310,22 @@ details.acc>summary:hover{color:var(--ink)}
 @media(min-width:1040px){.closebtn{display:none}}
 
 /* ---------- study ---------- */
-.studyhead{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.studyhead{display:flex;flex-direction:column;gap:9px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 .studyrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* 라벨 + 꽉 찬 선택 버튼 한 줄 */
+.segrow{display:flex;align-items:center;gap:10px}
+.seglbl{flex:0 0 30px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);text-align:right}
+.seg.fill{flex:1;min-width:0}
+.seg.fill button{flex:1;min-width:0;text-align:center;white-space:nowrap;letter-spacing:.01em}
+.seg.fill button i{font-style:normal;font-family:var(--mono);font-size:10px;opacity:.6;margin-left:4px;
+  vertical-align:1px;letter-spacing:0}
+.studyhead .hint b{color:var(--ink2);font-weight:600}
+.studyhead .hint{margin-top:-2px}
+@media(min-width:760px){
+  .segrow{gap:12px}
+  .seglbl{flex:0 0 34px}
+  .seg.fill{flex:0 1 auto;max-width:420px}
+}
 .basics{display:grid;gap:14px;grid-template-columns:1fr;margin-bottom:22px;align-items:start}
 @media(min-width:820px){.basics{grid-template-columns:1fr 1fr}}
 .tbl{width:100%;border-collapse:collapse;font-size:13px}
@@ -343,7 +357,12 @@ details.acc>summary:hover{color:var(--ink)}
 .slab.mine{color:var(--accent)}
 .slab.gen{color:var(--blue);margin-top:10px;padding-top:10px;border-top:1px solid var(--line2)}
 .stext.gen{color:var(--muted)}
-.srow{display:flex;gap:7px;margin-top:2px}
+.srow{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+@media(max-width:640px){
+  /* 좁은 화면에서 버튼이 카드 밖으로 밀려나지 않게 */
+  .srow{gap:5px}
+  .srow .mini{padding:7px 9px;font-size:11.5px;flex:0 1 auto}
+}
 
 /* ---------- reading ---------- */
 .read{display:flex;flex-direction:column;gap:16px;max-width:780px;margin:0 auto}
@@ -793,7 +812,7 @@ function starSvg(on) {
 
 /* ---------------- dictionary ---------------- */
 const FILTERS = [["all", "전체"], ["major", "메이저"], ["cups", "컵"], ["wands", "완드"],
-["swords", "소드"], ["pentacles", "펜타클"], ["court", "코트"], ["fav", "★ 즐겨찾기"],
+["swords", "소드"], ["pentacles", "펜타클"], ["fav", "★ 즐겨찾기"],
 ["diff2", "차이 많이"], ["diff1", "차이 조금+"]];
 
 /* -1 = no match. Otherwise the lower the number the closer the match, so a
@@ -1201,33 +1220,40 @@ function studyOrder() {
 
 function renderStudy() {
   const groups = studyOrder();
-  const sub = S.studyGroup === "minor"
-    ? `<div class="seg" role="group" aria-label="마이너 정렬">
-        <button data-mo="num" aria-pressed="${S.minorOrder === "num"}">유형 1 · 수비학 순</button>
-        <button data-mo="suit" aria-pressed="${S.minorOrder === "suit"}">유형 2 · 원소별</button></div>
-       <span class="hint">${S.minorOrder === "num" ? "1번 컵·완드·소드·펜타클 → 2번 컵·완드… 숫자의 의미가 네 수트에서 어떻게 달라지는지 비교하며 봅니다." : "컵 1 → 컵 2 → 컵 3… 한 수트의 이야기가 어떻게 흘러가는지 따라가며 봅니다."}</span>`
+  /* 버튼은 짧은 영어로 두고, 뜻은 아래 한국어 한 줄로 풀어 씁니다 — 말줄임표가 생기지 않게. */
+  const order = S.studyGroup === "minor"
+    ? {
+      aria: "마이너 정렬", attr: "mo", cur: S.minorOrder,
+      opts: [["num", "Number", "숫자 순"], ["suit", "Suit", "원소별"]],
+      hint: S.minorOrder === "num"
+        ? "<b>숫자 순</b> — 에이스 컵·완드·소드·펜타클 → 2번 컵·완드… 같은 숫자가 네 원소에서 어떻게 달라지는지 나란히 봅니다."
+        : "<b>원소별</b> — 컵 1 → 컵 2 → 컵 3… 한 수트의 이야기가 어떻게 흘러가는지 따라가며 봅니다."
+    }
     : S.studyGroup === "court"
-      ? `<div class="seg" role="group" aria-label="코트 정렬">
-        <button data-co="rank" aria-pressed="${S.courtOrder === "rank"}">계급별</button>
-        <button data-co="suit" aria-pressed="${S.courtOrder === "suit"}">원소별</button></div>
-       <span class="hint">${S.courtOrder === "rank" ? "페이지 → 나이트 → 퀸 → 킹. 같은 계급이 네 수트에서 어떻게 나타나는지 봅니다." : "한 수트의 네 인물을 나란히 봅니다."}</span>`
-      : `<span class="hint">광대(0)부터 세계(21)까지 번호 순서대로. 수비학적으로 묶이는 카드는 서로 이어져 있습니다.</span>`;
+      ? {
+        aria: "코트 정렬", attr: "co", cur: S.courtOrder,
+        opts: [["rank", "Rank", "계급별"], ["suit", "Suit", "원소별"]],
+        hint: S.courtOrder === "rank"
+          ? "<b>계급별</b> — 페이지 → 나이트 → 퀸 → 킹. 같은 계급이 네 수트에서 어떻게 나타나는지 봅니다."
+          : "<b>원소별</b> — 한 수트의 네 인물을 나란히 봅니다."
+      }
+      : { hint: "광대(0)부터 세계(21)까지 번호 순서대로. 수비학적으로 묶이는 카드는 서로 이어져 있습니다." };
+
+  const viewHint = { mine: "내가 정리한 노트만 봅니다.", gen: "일반론 해석만 봅니다.", both: "내 노트 아래에 일반론을 이어서 봅니다." }[S.studyView];
+
+  const segrow = (label, aria, attr, opts, cur) => `<div class="segrow">
+      <span class="seglbl">${label}</span>
+      <div class="seg fill" role="group" aria-label="${aria}">${opts.map(([v, en, ko]) =>
+    `<button data-${attr}="${v}" aria-pressed="${cur === v}" title="${ko || en}">${en}</button>`).join("")}</div>
+    </div>`;
 
   $("#p-study").innerHTML = `
     <div class="studyhead">
-      <div class="studyrow">
-        <div class="seg" role="group" aria-label="카드 유형">
-          <button data-sg="major" aria-pressed="${S.studyGroup === "major"}">메이저 22</button>
-          <button data-sg="minor" aria-pressed="${S.studyGroup === "minor"}">마이너 40</button>
-          <button data-sg="court" aria-pressed="${S.studyGroup === "court"}">코트 16</button>
-        </div>
-        <div class="seg" role="group" aria-label="해석 종류" style="margin-left:auto">
-          <button data-sv="mine" aria-pressed="${S.studyView === "mine"}">내 노트</button>
-          <button data-sv="gen" aria-pressed="${S.studyView === "gen"}">일반론</button>
-          <button data-sv="both" aria-pressed="${S.studyView === "both"}">둘 다</button>
-        </div>
-      </div>
-      <div class="studyrow">${sub}</div>
+      ${segrow("카드", "카드 유형", "sg", [["major", "Major <i>22</i>", "메이저"], ["minor", "Minor <i>40</i>", "마이너"], ["court", "Court <i>16</i>", "코트"]], S.studyGroup)}
+      ${segrow("해석", "해석 종류", "sv", [["mine", "Mine", "내 노트"], ["gen", "General", "일반론"], ["both", "Both", "둘 다"]], S.studyView)}
+      ${order.attr ? segrow("정렬", order.aria, order.attr, order.opts, order.cur) : ""}
+      <p class="hint"><b>${{ mine: "내 노트", gen: "일반론", both: "둘 다" }[S.studyView]}</b> — ${viewHint}</p>
+      <p class="hint">${order.hint}</p>
     </div>
     ${basicsHtml()}
     <div class="studylist">
@@ -1267,8 +1293,8 @@ function studyCard(c) {
         <p class="stext${S.studyView === "both" ? " gen" : ""}">${esc([c.gen1, c.gen2].filter(Boolean).join(" "))}</p>` : ""}
       <div class="srow">
         <button class="mini ${fav ? "on" : ""}" data-fav="${c.id}">${starSvg(fav)}${fav ? "담김" : "즐겨찾기"}</button>
-        <button class="mini" data-open="${c.id}">키워드·포인트 전체 보기</button>
-        <button class="mini" data-edit="${c.id}">✎ 편집</button>
+        <button class="mini" data-open="${c.id}" title="키워드·포인트 전체 보기">자세히</button>
+        <button class="mini" data-edit="${c.id}" title="이 카드 고치기">✎ 편집</button>
         ${isEdited(c.id) ? '<span class="dirty" style="align-self:center">수정</span>' : ""}
       </div>
     </div>
@@ -1558,11 +1584,9 @@ function renderRead() {
           <span>일반론 해석도 함께 보내기 <span class="hint">— 차이가 큰 카드에서 두 해석을 나란히 받으려면 켜 두세요.</span></span></label>
       </div>
     </div>
-    <div class="box">
-      <div class="boxh"><h3>AI에게 보낼 내용</h3>
-        ${S.promptEdited ? '<span class="lbl edited" style="margin-left:auto">직접 고침</span>'
-      : '<span class="lbl" style="margin-left:auto">자동 작성</span>'}</div>
-      <div class="boxb">
+    <details class="acc dsect" data-dsect="prompt" ${S.dataOpen.prompt ? "open" : ""}>
+      <summary>AI에게 보낼 내용<span class="smeta ${S.promptEdited ? "edited" : ""}">${S.promptEdited ? "직접 고침" : "자동 작성"}</span></summary>
+      <div class="accbody">
         <textarea class="q mono" id="pbox" rows="10" placeholder="질문과 카드를 넣으면 자동으로 채워집니다">${esc(currentPrompt())}</textarea>
         <div class="btnrow">
           <button class="btn pri" id="copyP" ${S.slots.length || S.promptEdited ? "" : "disabled"}>프롬프트 복사</button>
@@ -1577,7 +1601,7 @@ function renderRead() {
       : canAI ? "질문·카드를 바꾸면 자동으로 다시 작성됩니다. 직접 고쳐도 됩니다."
         : "이 파일에서는 AI를 바로 부를 수 없어요. 복사해서 Claude나 다른 AI에 붙여넣고, 답변을 아래에 붙여넣으세요."}</p>
       </div>
-    </div>
+    </details>
     <div class="box">
       <div class="boxh"><h3>AI 답변</h3>
         ${S.busy ? '<span class="lbl" style="margin-left:auto">받는 중…</span>' : ""}</div>
@@ -1614,9 +1638,14 @@ function wireRead() {
   const pb = $("#pbox");
   if (pb) pb.oninput = e => {
     S.promptEdited = true; S.promptText = e.target.value;
-    const lbl = $("#p-read .boxh .lbl");
+    const lbl = $('[data-dsect="prompt"] .smeta');
     if (lbl && !lbl.classList.contains("edited")) { lbl.textContent = "직접 고침"; lbl.classList.add("edited"); }
   };
+  $("#p-read").querySelectorAll("details[data-dsect]").forEach(d =>
+    d.addEventListener("toggle", () => {
+      S.dataOpen[d.dataset.dsect] = d.open;
+      try { localStorage.setItem("tarot.dataOpen", JSON.stringify(S.dataOpen)); } catch (e) { }
+    }));
   const ab = $("#abox"); if (ab) ab.oninput = e => { S.answer = e.target.value; };
   const add = $("#addCard"); if (add) add.onclick = openPicker;
   const dd = $("#doDraw"); if (dd) dd.onclick = openDraw;
