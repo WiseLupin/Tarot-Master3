@@ -346,10 +346,35 @@ details.acc>summary:hover{color:var(--ink)}
 .srow{display:flex;gap:7px;margin-top:2px}
 
 /* ---------- reading ---------- */
-.read{display:grid;gap:22px;grid-template-columns:1fr;align-items:start}
-@media(min-width:1040px){.read{grid-template-columns:400px minmax(0,1fr)}
-  .read>.box{position:sticky;top:80px;max-height:calc(100vh - 104px);display:flex;flex-direction:column}
-  .read>.box .result{overflow-y:auto}}
+.read{display:flex;flex-direction:column;gap:16px;max-width:780px;margin:0 auto}
+textarea.mono{font-family:var(--mono);font-size:11.8px;line-height:1.65;color:var(--muted)}
+.lbl.edited{color:var(--blue)}
+/* --- 리딩 기록 --- */
+.loglist{display:flex;flex-direction:column;gap:14px;max-width:840px}
+.logentry{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:11px}
+.loghead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.loghead time{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint)}
+.logacts{display:flex;gap:6px;margin-left:auto}
+.logq{font-size:17px;line-height:1.45}
+.logcards{display:flex;gap:8px;flex-wrap:wrap}
+.logcard{display:flex;flex-direction:column;align-items:center;gap:5px;width:66px}
+.logcard img{width:100%;border-radius:4px;border:1px solid var(--line);display:block}
+.logcard span{font-size:10.5px;line-height:1.3;color:var(--muted);text-align:center;word-break:keep-all}
+.logcard:hover img{border-color:var(--accent)}
+.logcard:hover span{color:var(--ink)}
+.logans{font-size:14px;line-height:1.82;color:var(--ink2)}
+.logans h3{font-family:var(--serif);font-size:15.5px;color:var(--ink);margin:18px 0 7px}
+.logans h3:first-child{margin-top:0}
+.logans p{margin:0 0 11px}
+.logans ul{margin:0 0 11px;padding-left:19px}
+.logans li{margin-bottom:4px}
+.logans strong{color:var(--ink);font-weight:600}
+.logans em{font-style:normal;background:var(--accent-soft);color:var(--accent-ink);padding:1px 5px;border-radius:4px}
+.logmemo{width:100%;border:1px dashed var(--line);border-radius:8px;padding:8px 11px;background:transparent;
+  outline:none;font-size:12.8px;line-height:1.6;resize:vertical;font-family:var(--sans);color:var(--ink2)}
+.logmemo:focus{border-style:solid;border-color:var(--accent);background:var(--surface2)}
+.logmemo::placeholder{color:var(--faint)}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
 .boxh{padding:13px 16px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:9px;background:var(--surface2);
   border-radius:12px 12px 0 0}
@@ -409,6 +434,54 @@ pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:11.5px;line-he
   transition:.14s;aspect-ratio:300/527}
 .pickgrid button:hover{border-color:var(--accent);transform:translateY(-2px)}
 .pickgrid img{display:block;width:100%;height:100%;object-fit:cover}
+/* ---------- 무작위로 뽑기 ---------- */
+.drawpanel{display:flex;flex-direction:column;gap:9px;padding:12px;border:1px solid var(--line);
+  border-radius:10px;background:var(--surface2)}
+.drawrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.drawrow .lbl{flex:0 0 56px}
+.drawrow .btn{margin-left:auto}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:9px;background:var(--surface);overflow:hidden}
+.stepper button{width:36px;height:34px;font-size:16px;color:var(--muted)}
+.stepper button:hover:not(:disabled){background:var(--surface2);color:var(--ink)}
+.stepper button:disabled{opacity:.3}
+.stepper b{min-width:30px;text-align:center;font-family:var(--mono);font-size:14px;
+  border-left:1px solid var(--line);border-right:1px solid var(--line);line-height:34px}
+
+.drawwrap{position:fixed;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:18px;
+  background:color-mix(in srgb,var(--bg2) 86%,transparent);backdrop-filter:blur(10px)}
+.drawin{width:100%;max-width:620px;display:flex;flex-direction:column;gap:14px}
+.drawtop{display:flex;align-items:flex-start;gap:12px}
+.drawstep{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink)}
+.drawstep span{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--faint);margin-left:4px}
+.drawhint{font-size:12.5px;color:var(--muted);margin-top:2px}
+.drawtop .iconbtn{margin-left:auto;width:38px;height:38px;border:1px solid var(--line);background:var(--surface)}
+.drawbar{height:3px;border-radius:2px;background:var(--line);overflow:hidden}
+.drawbar span{display:block;height:100%;background:var(--accent);transition:width .35s ease}
+.fan{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;perspective:1100px}
+.fancard{position:relative;width:88px;aspect-ratio:300/527;border-radius:7px;transform-style:preserve-3d;
+  transition:transform .55s cubic-bezier(.3,.8,.4,1), opacity .3s;transform:rotate(var(--tilt,0deg))}
+@media(min-width:560px){.fancard{width:104px}}
+.fancard:not([disabled]):hover{transform:rotate(var(--tilt,0deg)) translateY(-9px) scale(1.03)}
+.fancard.flipped{transform:rotateY(180deg) scale(1.14);z-index:2}
+.fancard.dim{opacity:.25}
+.fancard .face{position:absolute;inset:0;border-radius:7px;overflow:hidden;backface-visibility:hidden;
+  border:1px solid var(--line);box-shadow:var(--shadow)}
+.fancard .front{transform:rotateY(180deg);background:var(--surface)}
+.fancard .front img{width:100%;height:100%;object-fit:cover;display:block}
+.fancard .back{display:grid;place-items:center;background-color:#172038;
+  background-image:
+    radial-gradient(circle,transparent 39%,rgba(217,168,63,.34) 40%,rgba(217,168,63,.34) 43%,transparent 44%),
+    radial-gradient(circle,transparent 39%,rgba(217,168,63,.20) 40%,rgba(217,168,63,.20) 43%,transparent 44%);
+  background-size:15px 15px,15px 15px;background-position:0 0,7.5px 7.5px;
+  box-shadow:inset 0 0 0 3px #172038, inset 0 0 0 4px rgba(217,168,63,.45)}
+.fancard .back i{font-family:var(--mono);font-style:normal;font-size:15px;font-weight:500;color:#F0DFAE;
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(23,32,56,.92);border:1px solid rgba(217,168,63,.5)}
+.drawname{text-align:center;font-family:var(--serif);font-size:17px;font-weight:700;min-height:24px;color:var(--accent-ink)}
+.drawdone{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.drawdone img{width:34px;border-radius:4px;border:1px solid var(--line);display:block}
+@media(prefers-reduced-motion:reduce){.fancard{transition:none}}
+
 .lightbox{position:fixed;inset:0;z-index:90;background:color-mix(in srgb,var(--bg2) 88%,transparent);
   display:grid;place-items:center;padding:24px;cursor:zoom-out}
 .lightbox img{max-width:min(430px,90vw);max-height:88vh;border-radius:8px;box-shadow:var(--shadow-lg);border:1px solid var(--line)}
@@ -435,8 +508,12 @@ pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:11.5px;line-he
 .drow img{width:34px;border-radius:4px;border:1px solid var(--line);flex-shrink:0}
 .drow .nm{flex:1;min-width:0;font-size:13.5px;font-weight:500}
 .drow .fl{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
-.datagrid{display:grid;gap:16px;grid-template-columns:1fr;align-items:start}
-@media(min-width:1000px){.datagrid{grid-template-columns:1fr 1fr}}
+.datalist{display:flex;flex-direction:column;gap:10px;max-width:860px}
+.dsect>summary{font-size:14px;padding:14px}
+.dsect>.accbody{display:flex;flex-direction:column;gap:12px;padding:16px}
+.smeta{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.06em;color:var(--faint);
+  margin-left:9px;padding:2px 8px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.smeta.edited{color:var(--blue);border-color:color-mix(in srgb,var(--blue) 35%,transparent)}
 textarea.json{width:100%;min-height:150px;font-family:var(--mono);font-size:11px;line-height:1.55;border:1px solid var(--line);
   border-radius:9px;padding:11px;background:var(--surface2);outline:none;resize:vertical;color:var(--muted)}
 .filelabel{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:9px;font-size:13.5px;font-weight:600;
@@ -463,6 +540,7 @@ textarea.json{width:100%;min-height:150px;font-family:var(--mono);font-size:11px
   <section class="panel" id="p-dict"></section>
   <section class="panel" id="p-read" hidden></section>
   <section class="panel" id="p-study" hidden></section>
+  <section class="panel" id="p-log" hidden></section>
   <section class="panel" id="p-fav" hidden></section>
   <section class="panel" id="p-data" hidden></section>
 </main>
@@ -501,6 +579,33 @@ const EDITABLE = [
   { k: "gadvice", t: "일반론 · 조언", rows: 2 }
 ];
 const GSITU = [["glove", "연애"], ["gwork", "직업 · 일"], ["gmoney", "금전"], ["gadvice", "조언"]];
+
+/* AI에게 보낼 글의 기본값. 데이터 탭에서 언제든 고칠 수 있고, 고친 값은 저장됩니다. */
+const DEFAULT_TPL = {
+  intro: `당신은 유니버셜웨이트 타로카드 리더입니다.
+
+아래 [카드 자료]는 질문자가 직접 정리해 둔 해석 노트입니다. 해석의 근거는 이 해석 노트의 키워드·포인트·종합해석에서 가져오세요. 만약 해석 노트가 일반적 해석(일반적 유니버설 타로카드의 해석)과 차이가 아주 큰 경우에는 두 가지 해석 모두를 제시해주세요. 큰 차이가 없다면 그냥 해석 노트에 근거해서 리딩해주세요. 이 타로카드 리더는 정방향/역방향도 구분하지 않고 해석합니다.(이 체계는 두 방향을 하나로 통합해 봅니다).`,
+  genLine: `각 카드에는 [일반론] 항목과 '해석 노트와의 차이' 표시가 함께 들어 있습니다. 차이가 '많이 다름'인 카드에서만 두 해석을 나란히 제시하고, 그 밖의 카드는 해석 노트만으로 읽으세요.`,
+  format: `## 카드별 읽기
+카드마다 3~5문장. 이 질문(그리고 위치가 적혀 있다면 그 위치)에서 무엇을 말하는지 쓰고, 근거가 된 키워드나 포인트를 문장 안에서 그대로 인용하세요.
+
+## 카드끼리의 흐름
+카드들이 이어지며 만드는 이야기. 자료에 연결카드나 상응 메이저카드가 있으면 활용하세요. 카드가 한 장이면 이 항목은 생략합니다.
+
+## 종합 답변
+질문에 대한 직접적인 답. 애매하게 얼버무리지 말고, 자료가 말하는 방향을 분명히 쓰세요.
+
+## 조언
+지금 실제로 해볼 수 있는 것 1~2가지.
+
+한국어 존댓말로, 담백하게 쓰세요. 카드 자료에 없는 내용을 지어내지 말고, 자료가 부정적이면 부정적인 대로 정직하게 전하세요.`
+};
+const TPL_FIELDS = [
+  ["intro", "기본 지시문", "리딩의 성격과 근거를 정하는 첫 문단입니다."],
+  ["genLine", "일반론을 함께 보낼 때 덧붙일 말", "아래 ‘일반론도 함께 참고’를 켰을 때만 들어갑니다."],
+  ["format", "작성 방법", "AI가 어떤 형식으로 답하게 할지 정합니다."]
+];
+let TPL = Object.assign({}, DEFAULT_TPL);
 const VIEWS = [["mine", "내 노트"], ["gen", "일반론"], ["cmp", "비교"]];
 /* 내 노트와 일반론이 얼마나 갈리는지 */
 const DIFF = [
@@ -569,8 +674,11 @@ const POSHINTS = ["과거", "현재", "미래", "원인", "결과", "조언", "�
 const S = {
   tab: "dict", q: "", filter: "all", sel: null,
   studyGroup: "major", minorOrder: "num", courtOrder: "rank", basicsOpen: false,
-  view: "cmp", studyView: "mine", useGen: false,
-  favs: new Set(), question: "", slots: [], result: "", busy: false, showPrompt: false,
+  view: "cmp", studyView: "mine", useGen: true,
+  favs: new Set(), question: "", slots: [], busy: false,
+  answer: "", promptText: "", promptEdited: false,
+  log: [], logQ: "", logEdit: null, logOpen: {}, dataOpen: {},
+  spreadN: 5, drawN: 1, draw: null,
   editing: false, draft: null, note: ""
 };
 let DB = null, SAMPLE = null, DL = null, saveTimer = null;
@@ -594,15 +702,32 @@ function shownKeywords(c) { return (c.keywords || []).filter(k => k !== "BAD"); 
 function loadLocal() {
   try { const r = localStorage.getItem("tarot.favs"); if (r) JSON.parse(r).forEach(i => S.favs.add(i)); } catch (e) { }
   try { const o = localStorage.getItem("tarot.ov"); if (o) OV = JSON.parse(o) || {}; } catch (e) { }
+  try { const l = localStorage.getItem("tarot.log"); const a = l ? JSON.parse(l) : null; if (Array.isArray(a)) S.log = a; } catch (e) { }
+  try { const t = localStorage.getItem("tarot.tpl"); if (t) applyTpl(JSON.parse(t)); } catch (e) { }
+  try { const d = localStorage.getItem("tarot.dataOpen"); const o = d ? JSON.parse(d) : null; if (o && typeof o === "object") S.dataOpen = o; } catch (e) { }
+  try {
+    const sn = +localStorage.getItem("tarot.spreadN"); if ([3, 5, 7].includes(sn)) S.spreadN = sn;
+    const dn = +localStorage.getItem("tarot.drawN"); if (dn >= 1 && dn <= 10) S.drawN = dn;
+  } catch (e) { }
   try {
     const v = localStorage.getItem("tarot.view"); if (VIEWS.some(([k]) => k === v)) S.view = v;
     const sv = localStorage.getItem("tarot.studyView"); if (["mine", "gen", "both"].includes(sv)) S.studyView = sv;
-    S.useGen = localStorage.getItem("tarot.useGen") === "1";
+    const ug = localStorage.getItem("tarot.useGen");
+    S.useGen = ug === null ? true : ug === "1";   // 기본값이 두 해석을 견주는 쪽이라 켜 둡니다
   } catch (e) { }
   rebuild();
 }
 function saveOvLocal() {
   try { localStorage.setItem("tarot.ov", JSON.stringify(OV)); } catch (e) { }
+}
+function applyTpl(o) {
+  if (!o || typeof o !== "object") return;
+  for (const [k] of TPL_FIELDS) if (typeof o[k] === "string") TPL[k] = o[k];
+}
+function tplChanged() { return TPL_FIELDS.some(([k]) => TPL[k] !== DEFAULT_TPL[k]); }
+function saveTpl() {
+  try { localStorage.setItem("tarot.tpl", JSON.stringify(TPL)); } catch (e) { }
+  if (DB) DB.doc("prefs/prompt").set(Object.assign({ at: Date.now() }, TPL)).catch(() => { });
 }
 function writeCard(id) {
   saveOvLocal(); rebuild();
@@ -629,6 +754,7 @@ const TABS = [
   ["dict", "사전", () => CARDS.length],
   ["read", "해석", () => null],
   ["study", "학습", () => null],
+  ["log", "기록", () => S.log.length || null],
   ["fav", "즐겨찾기", () => S.favs.size],
   ["data", "데이터", () => Object.keys(OV).length || null]
 ];
@@ -642,7 +768,7 @@ function renderTabs() {
     S.tab = b.dataset.tab; renderAll();
     window.scrollTo({ top: 0, behavior: "instant" });
   });
-  ["dict", "read", "study", "fav", "data"].forEach(k => { $("#p-" + k).hidden = S.tab !== k; });
+  ["dict", "read", "study", "log", "fav", "data"].forEach(k => { $("#p-" + k).hidden = S.tab !== k; });
 }
 
 /* ---------------- card thumb ---------------- */
@@ -666,9 +792,9 @@ function starSvg(on) {
 }
 
 /* ---------------- dictionary ---------------- */
-const FILTERS = [["all", "전체"], ["diff2", "차이 많이"], ["diff1", "차이 조금+"],
-["major", "메이저"], ["cups", "컵"], ["wands", "완드"],
-["swords", "소드"], ["pentacles", "펜타클"], ["court", "코트"], ["fav", "★ 즐겨찾기"]];
+const FILTERS = [["all", "전체"], ["major", "메이저"], ["cups", "컵"], ["wands", "완드"],
+["swords", "소드"], ["pentacles", "펜타클"], ["court", "코트"], ["fav", "★ 즐겨찾기"],
+["diff2", "차이 많이"], ["diff1", "차이 조금+"]];
 
 /* -1 = no match. Otherwise the lower the number the closer the match, so a
    search for 탑 lists 16.탑 before cards that merely mention a tower. */
@@ -1173,8 +1299,9 @@ function basicsTables() {
 /* ---------------- data management ---------------- */
 function exportJson() {
   return JSON.stringify({
-    app: "tarot-note", version: 1, exportedAt: new Date().toISOString(),
-    favorites: [...S.favs], overrides: OV
+    app: "tarot-note", version: 2, exportedAt: new Date().toISOString(),
+    favorites: [...S.favs], overrides: OV, readings: S.log,
+    prompt: tplChanged() ? TPL : null
   }, null, 2);
 }
 function storageOk() {
@@ -1191,6 +1318,12 @@ function backupInfo() {
     const days = Math.floor((Date.now() - r.at) / 86400000);
     return { days, stale: r.n !== Object.keys(OV).length || days >= 14, when: new Date(r.at).toLocaleDateString("ko-KR") };
   } catch (e) { return null; }
+}
+/* 데이터 탭은 항목이 많아서 전부 접어 두고, 필요한 것만 펴서 봅니다. */
+function dsect(key, title, meta, body, cls) {
+  return `<details class="acc dsect" data-dsect="${key}" ${S.dataOpen[key] ? "open" : ""}>
+    <summary>${title}${meta ? `<span class="smeta ${cls || ""}">${meta}</span>` : ""}</summary>
+    <div class="accbody">${body}</div></details>`;
 }
 function renderData() {
   const ids = Object.keys(OV);
@@ -1215,10 +1348,8 @@ function renderData() {
       <p class="hint">원본 해설집은 앱 안에 그대로 있고, 고친 부분만 따로 저장하는 방식입니다. ${where}</p>
     </div>
     ${warn}
-    <div class="datagrid">
-      <div class="box">
-        <div class="boxh"><h3>내가 고친 카드</h3><span class="lbl" style="margin-left:auto">${ids.length}</span></div>
-        <div class="boxb">
+    <div class="datalist">
+      ${dsect("edits", "내가 고친 카드", ids.length ? ids.length + "장" : "없음", `
           ${edited.length ? `<div class="dlist">${edited.map(c => `
             <div class="drow">
               <img src="${IMG[c.id]}" alt="">
@@ -1227,36 +1358,43 @@ function renderData() {
               <button class="mini danger" data-revert="${c.id}">원본으로</button>
             </div>`).join("")}</div>
             <div class="btnrow" style="margin-top:14px"><button class="btn" data-resetall="1">전부 원본으로 되돌리기</button></div>`
-      : `<div class="empty" style="padding:34px 10px"><b>아직 고친 카드가 없습니다</b>
-             <span>카드 사전이나 학습 탭에서 <b>✎ 편집</b>을 누르면 키워드·포인트·해석을 직접 고칠 수 있어요.</span></div>`}
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:16px">
-        <div class="box">
-          <div class="boxh"><h3>백업 내보내기</h3></div>
-          <div class="boxb">
-            <p class="hint">고친 내용과 즐겨찾기를 한 덩어리로 저장합니다. 다른 기기로 옮기거나, 앱을 새로 만들 때 그대로 불러올 수 있어요.</p>
-            <textarea class="json" id="expBox" readonly>${esc(exportJson())}</textarea>
-            <div class="btnrow">
-              <button class="btn pri" id="copyExp">복사</button>
-              <button class="btn" id="fileExp">파일로 저장</button>
-            </div>
+      : `<div class="empty" style="padding:30px 10px"><b>아직 고친 카드가 없습니다</b>
+             <span>카드 사전이나 학습 탭에서 <b>✎ 편집</b>을 누르면 키워드·포인트·해석을 직접 고칠 수 있어요.</span></div>`}`)}
+
+      ${dsect("tpl", "AI에게 보낼 내용의 기본값", tplChanged() ? "고침" : "기본 그대로", `
+          <p class="hint">해석 탭에서 자동으로 채워지는 글의 틀입니다. 여기를 고치면 앞으로의 모든 리딩에 적용됩니다. 이미 저장된 기록은 그대로 남습니다.</p>
+          ${TPL_FIELDS.map(([k, t, sub]) => `<div class="field">
+            <label for="t-${k}">${t}</label><span class="sub">${sub}</span>
+            <textarea id="t-${k}" data-tpl="${k}" rows="${k === "genLine" ? 3 : 9}">${esc(TPL[k])}</textarea>
+          </div>`).join("")}
+          <div class="btnrow">
+            <button class="btn pri" id="tplSave">기본값 저장</button>
+            ${tplChanged() ? `<button class="btn" id="tplReset">처음 기본값으로</button>` : ""}
           </div>
-        </div>
-        <div class="box">
-          <div class="boxh"><h3>백업 불러오기</h3></div>
-          <div class="boxb">
-            <p class="hint">위에서 내보낸 내용을 붙여넣거나 파일을 고르세요. 지금 저장된 수정 내용은 덮어씁니다.</p>
-            <textarea class="json" id="impBox" placeholder='{ "app": "tarot-note", ... }'></textarea>
-            <div class="btnrow">
-              <button class="btn pri" id="doImp">불러오기</button>
-              <label class="filelabel">파일 고르기<input type="file" accept=".json,application/json" id="impFile"></label>
-            </div>
-            <div class="status ${S.impErr ? "bad" : ""}" id="impMsg">${esc(S.impMsg || "")}</div>
+          <div class="status" id="tplMsg"></div>`, tplChanged() ? "edited" : "")}
+
+      ${dsect("exp", "백업 내보내기", bi ? "마지막 " + esc(bi.when) : "아직 없음", `
+          <p class="hint">고친 내용과 즐겨찾기, 리딩 기록을 한 덩어리로 저장합니다. 다른 기기로 옮기거나, 앱을 새로 만들 때 그대로 불러올 수 있어요.</p>
+          <textarea class="json" id="expBox" readonly>${esc(exportJson())}</textarea>
+          <div class="btnrow">
+            <button class="btn pri" id="copyExp">복사</button>
+            <button class="btn" id="fileExp">파일로 저장</button>
+          </div>`)}
+
+      ${dsect("imp", "백업 불러오기", "", `
+          <p class="hint">위에서 내보낸 내용을 붙여넣거나 파일을 고르세요. 지금 저장된 수정 내용은 덮어씁니다.</p>
+          <textarea class="json" id="impBox" placeholder='{ "app": "tarot-note", ... }'></textarea>
+          <div class="btnrow">
+            <button class="btn pri" id="doImp">불러오기</button>
+            <label class="filelabel">파일 고르기<input type="file" accept=".json,application/json" id="impFile"></label>
           </div>
-        </div>
-      </div>
+          <div class="status ${S.impErr ? "bad" : ""}" id="impMsg">${esc(S.impMsg || "")}</div>`)}
     </div>`;
+  $("#p-data").querySelectorAll("details[data-dsect]").forEach(d =>
+    d.addEventListener("toggle", () => {
+      S.dataOpen[d.dataset.dsect] = d.open;
+      try { localStorage.setItem("tarot.dataOpen", JSON.stringify(S.dataOpen)); } catch (e) { }
+    }));
   wireCommon($("#p-data"));
   const ra = $("[data-resetall]");
   if (ra) ra.onclick = () => {
@@ -1264,6 +1402,22 @@ function renderData() {
     const old = Object.keys(OV); OV = {}; saveOvLocal(); rebuild();
     if (DB) old.forEach(id => DB.doc("cards/" + id).delete().catch(() => { }));
     renderAll(); toast("전부 원본으로 되돌렸습니다");
+  };
+  $("#p-data").querySelectorAll("[data-tpl]").forEach(t => t.oninput = () => {
+    TPL[t.dataset.tpl] = t.value;
+    const m = $("#tplMsg"); if (m) { m.classList.remove("bad"); m.textContent = "아직 저장 안 됨"; }
+  });
+  $("#tplSave").onclick = () => {
+    $("#p-data").querySelectorAll("[data-tpl]").forEach(t => { TPL[t.dataset.tpl] = t.value; });
+    saveTpl(); S.promptEdited = false; S.promptText = "";
+    renderData(); toast("기본값을 저장했습니다");
+  };
+  const tr = $("#tplReset");
+  if (tr) tr.onclick = () => {
+    if (!confirm("AI에게 보낼 내용의 기본값을 처음 상태로 되돌릴까요?")) return;
+    TPL = Object.assign({}, DEFAULT_TPL);
+    saveTpl(); S.promptEdited = false; S.promptText = "";
+    renderData(); toast("처음 기본값으로 되돌렸습니다");
   };
   $("#copyExp").onclick = async () => {
     const b = $("#copyExp");
@@ -1292,7 +1446,7 @@ function renderData() {
 function doImport(raw) {
   let j;
   try { j = JSON.parse(raw); } catch (e) { S.impErr = true; S.impMsg = "JSON 형식이 아닙니다. 내용을 다시 확인해 주세요."; renderData(); return; }
-  if (!j || typeof j !== "object" || (!j.overrides && !j.favorites)) {
+  if (!j || typeof j !== "object" || (!j.overrides && !j.favorites && !j.readings)) {
     S.impErr = true; S.impMsg = "이 앱의 백업 파일이 아닌 것 같습니다."; renderData(); return;
   }
   const next = {}, keys = EDITABLE.map(f => f.k);
@@ -1309,8 +1463,25 @@ function doImport(raw) {
     before.filter(id => !next[id]).forEach(id => DB.doc("cards/" + id).delete().catch(() => { }));
     Object.keys(next).forEach(id => DB.doc("cards/" + id).set(Object.assign({ _at: Date.now() }, next[id])).catch(() => { }));
   }
+  if (Array.isArray(j.readings)) {
+    const oldIds = S.log.map(e => e.id);
+    S.log = j.readings.filter(e => e && e.id).map(e => ({
+      id: String(e.id), at: Number(e.at) || Date.now(), q: String(e.q || ""),
+      cards: Array.isArray(e.cards) ? e.cards.filter(c => c && BASEBY[c.id]).map(c => ({ id: c.id, pos: String(c.pos || "") })) : [],
+      prompt: String(e.prompt || ""), answer: String(e.answer || ""), memo: String(e.memo || ""),
+      ...(e.edited ? { edited: Number(e.edited) } : {})
+    })).sort((a, b) => b.at - a.at);
+    saveLogLocal();
+    if (DB) {
+      const keep = new Set(S.log.map(e => e.id));
+      oldIds.filter(i => !keep.has(i)).forEach(i => DB.doc("readings/" + i).delete().catch(() => { }));
+      S.log.forEach(e => DB.doc("readings/" + e.id).set(e).catch(() => { }));
+    }
+  }
+  if (j.prompt) { applyTpl(j.prompt); saveTpl(); }
   S.impErr = false;
-  S.impMsg = "불러왔습니다 — 카드 " + Object.keys(next).length + "장, 즐겨찾기 " + S.favs.size + "장.";
+  S.impMsg = "불러왔습니다 — 카드 " + Object.keys(next).length + "장, 즐겨찾기 " + S.favs.size + "장, 기록 " + S.log.length + "건"
+    + (j.prompt ? ", 프롬프트 기본값 1건" : "") + ".";
   renderAll(); setTimeout(() => { S.impMsg = ""; }, 4000);
 }
 
@@ -1328,93 +1499,101 @@ function buildPrompt() {
     if (c.sectionMajor) L.push(`   · 상응 메이저카드: ${c.sectionMajor}`);
     if (c.summary) L.push(`   · 종합해석: ${c.summary}`);
     if (S.useGen) {
+      L.push(`   [일반론] 해석 노트와의 차이: ${DIFF[dlvl(c)].t}`);
       L.push(`   [일반론] 키워드: ${(c.gkw || []).join(" / ")}`);
       L.push(`   [일반론] 해석: ${[c.gen1, c.gen2].filter(Boolean).join(" ")}`);
-      if (c.general) L.push(`   [일반론] 내 노트와 다른 점: ${c.general}`);
+      if (c.dwhy) L.push(`   [일반론] 어디가 다른지: ${c.dwhy}`);
     }
     return L.join("\n");
   }).join("\n\n");
 
-  return `당신은 신종민 『타로카드 비밀의 문』 체계로 리딩하는 타로 리더입니다.
-
-아래 [카드 자료]는 질문자가 직접 정리해 둔 해석 노트입니다. 해석의 근거는 오직 이 자료의 키워드·포인트·종합해석에서만 가져오세요. 자료에 없는 일반적인 타로 상식을 끌어오지 말고, 정방향/역방향도 구분하지 마세요(이 체계는 두 방향을 하나로 통합해 봅니다).${S.useGen ? `
-
-각 카드에 [일반론] 항목이 함께 들어 있습니다. 이것은 라이더-웨이트 일반 해석이며 참고용입니다. 리딩의 중심은 어디까지나 질문자의 노트이고, 일반론은 노트를 보충하거나 노트와 뚜렷하게 갈리는 지점을 짚을 때만 쓰세요. 그렇게 쓸 때는 “일반론에서는 …”이라고 출처를 밝혀 주세요.` : ""}
-
-[질문]
-${S.question.trim() || "(질문이 비어 있습니다. 카드가 전하는 메시지를 전반적으로 읽어 주세요.)"}
-
-[카드 자료]
-${cardBlock}
-
-[작성 방법]
-## 카드별 읽기
-카드마다 3~5문장. 이 질문(그리고 위치가 적혀 있다면 그 위치)에서 무엇을 말하는지 쓰고, 근거가 된 키워드나 포인트를 문장 안에서 그대로 인용하세요.
-
-## 카드끼리의 흐름
-카드들이 이어지며 만드는 이야기. 자료에 연결카드나 상응 메이저카드가 있으면 활용하세요. 카드가 한 장이면 이 항목은 생략합니다.
-
-## 종합 답변
-질문에 대한 직접적인 답. 애매하게 얼버무리지 말고, 자료가 말하는 방향을 분명히 쓰세요.
-${S.useGen ? `
-## 일반론과 비교하면
-내 노트로 읽은 결과와 일반론으로 읽었을 때의 결과가 어디서 갈리는지 2~4문장. 갈리는 지점이 없으면 “두 해석이 같은 방향을 가리킵니다”라고 짧게 쓰세요.
-` : ""}
-## 조언
-지금 실제로 해볼 수 있는 것 1~2가지.
-
-한국어 존댓말로, 담백하게 쓰세요. 카드 자료에 없는 내용을 지어내지 말고, 자료가 부정적이면 부정적인 대로 정직하게 전하세요.`;
+  return [
+    TPL.intro,
+    S.useGen && TPL.genLine ? "\n" + TPL.genLine : "",
+    `\n[질문]\n${S.question.trim() || "(질문이 비어 있습니다. 카드가 전하는 메시지를 전반적으로 읽어 주세요.)"}`,
+    `\n[카드 자료]\n${cardBlock}`,
+    `\n[작성 방법]\n${TPL.format}`
+  ].filter(Boolean).join("\n");
 }
+
+function currentPrompt() { return S.promptEdited ? S.promptText : buildPrompt(); }
 
 function renderRead() {
   const canAI = SAMPLE !== null;
+  const canSave = S.answer.trim() || S.slots.length;
   $("#p-read").innerHTML = `
   <div class="read">
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="box">
-        <div class="boxh"><h3>질문</h3></div>
-        <div class="boxb">
-          <textarea class="q" id="qq" placeholder="예) 지금 다니는 회사에 계속 있는 게 맞을까요?">${esc(S.question)}</textarea>
-        </div>
+    <div class="box">
+      <div class="boxh"><h3>질문</h3>${S.logEdit ? '<span class="lbl" style="margin-left:auto">기록 수정 중</span>' : ""}</div>
+      <div class="boxb">
+        <textarea class="q" id="qq" placeholder="예) 지금 다니는 회사에 계속 있는 게 맞을까요?">${esc(S.question)}</textarea>
       </div>
-      <div class="box">
-        <div class="boxh"><h3>뽑은 카드</h3><span class="lbl" style="margin-left:auto">${S.slots.length}장</span></div>
-        <div class="boxb">
-          ${S.slots.length ? `<div class="slots">${S.slots.map(slotHtml).join("")}</div>`
-      : `<p class="hint">아직 카드가 없습니다. 아래에서 나온 순서대로 추가하세요. 위치 칸은 비워 두어도 됩니다.</p>`}
-          <div class="btnrow">
-            <button class="btn" id="addCard">＋ 카드 추가</button>
-            ${S.slots.length ? `<button class="btn" id="clearCards">모두 지우기</button>` : ""}
-          </div>
-          <label class="chk"><input type="checkbox" id="useGen" ${S.useGen ? "checked" : ""}>
-            <span>일반론 해석도 함께 참고 <span class="hint">— 내 노트를 기준으로 읽되, 일반론과 갈리는 지점을 따로 짚어 줍니다.</span></span></label>
-        </div>
-      </div>
-      <div class="btnrow">
-        ${canAI ? `<button class="btn pri" id="go" ${S.busy || !S.slots.length ? "disabled" : ""}>
-          ${S.busy ? "해석하는 중…" : "AI 해석 받기"}</button>` : ""}
-        <button class="btn" id="copyP" ${S.slots.length ? "" : "disabled"}>프롬프트 복사</button>
-        ${S.busy ? `<button class="btn" id="stop">중단</button>` : ""}
-      </div>
-      ${canAI ? "" : `<p class="hint">이 파일을 브라우저에서 직접 열면 AI 해석은 쓸 수 없어요. <b>프롬프트 복사</b>를 눌러 Claude나 다른 AI에 붙여넣으면 같은 결과를 받을 수 있습니다.</p>`}
-      <details class="acc" ${S.showPrompt ? "open" : ""}><summary>AI에게 보내는 내용 확인</summary>
-        <div class="accbody" style="padding:12px"><pre class="prompt">${esc(buildPrompt())}</pre></div></details>
     </div>
     <div class="box">
-      <div class="boxh"><h3>해석</h3>
-        <span class="lbl" style="margin-left:auto">내가 정리한 키워드 기준</span></div>
-      <div class="result" id="res">${S.result ? md(S.result) : (S.busy ? thinkingHtml() : emptyRead())}</div>
+      <div class="boxh"><h3>뽑은 카드</h3><span class="lbl" style="margin-left:auto">${S.slots.length}장</span></div>
+      <div class="boxb">
+        ${S.slots.length ? `<div class="slots">${S.slots.map(slotHtml).join("")}</div>`
+      : `<p class="hint">아직 카드가 없습니다. 나온 순서대로 추가하세요. 위치 칸은 비워 두어도 됩니다.</p>`}
+        <div class="btnrow">
+          <button class="btn" id="addCard">＋ 카드 고르기</button>
+          ${S.slots.length ? `<button class="btn" id="clearCards">모두 지우기</button>` : ""}
+        </div>
+        <div class="drawpanel">
+          <div class="drawrow">
+            <span class="lbl">펼칠 장수</span>
+            <div class="seg">${[3, 5, 7].map(n =>
+      `<button data-spread="${n}" aria-pressed="${S.spreadN === n}">${n}장</button>`).join("")}</div>
+          </div>
+          <div class="drawrow">
+            <span class="lbl">뽑을 장수</span>
+            <div class="stepper">
+              <button data-drawn="-1" aria-label="하나 줄이기" ${S.drawN <= 1 ? "disabled" : ""}>−</button>
+              <b>${S.drawN}</b>
+              <button data-drawn="1" aria-label="하나 늘리기" ${S.drawN >= 10 ? "disabled" : ""}>＋</button>
+            </div>
+            <button class="btn pri" id="doDraw">무작위로 뽑기</button>
+          </div>
+        </div>
+        <label class="chk"><input type="checkbox" id="useGen" ${S.useGen ? "checked" : ""}>
+          <span>일반론 해석도 함께 보내기 <span class="hint">— 차이가 큰 카드에서 두 해석을 나란히 받으려면 켜 두세요.</span></span></label>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxh"><h3>AI에게 보낼 내용</h3>
+        ${S.promptEdited ? '<span class="lbl edited" style="margin-left:auto">직접 고침</span>'
+      : '<span class="lbl" style="margin-left:auto">자동 작성</span>'}</div>
+      <div class="boxb">
+        <textarea class="q mono" id="pbox" rows="10" placeholder="질문과 카드를 넣으면 자동으로 채워집니다">${esc(currentPrompt())}</textarea>
+        <div class="btnrow">
+          <button class="btn pri" id="copyP" ${S.slots.length || S.promptEdited ? "" : "disabled"}>프롬프트 복사</button>
+          ${canAI ? `<button class="btn" id="go" ${S.busy || !S.slots.length ? "disabled" : ""}>
+            ${S.busy ? "해석하는 중…" : "AI 해석 받기"}</button>` : ""}
+          ${S.busy ? `<button class="btn" id="stop">중단</button>` : ""}
+          ${S.promptEdited ? `<button class="btn" id="resetP">자동 작성으로 되돌리기</button>` : ""}
+          <button class="btn" id="editTpl">기본값 고치기</button>
+        </div>
+        <p class="hint">${S.promptEdited
+      ? "직접 고친 내용이 그대로 복사됩니다. 카드를 바꿔도 이 글은 자동으로 바뀌지 않아요."
+      : canAI ? "질문·카드를 바꾸면 자동으로 다시 작성됩니다. 직접 고쳐도 됩니다."
+        : "이 파일에서는 AI를 바로 부를 수 없어요. 복사해서 Claude나 다른 AI에 붙여넣고, 답변을 아래에 붙여넣으세요."}</p>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxh"><h3>AI 답변</h3>
+        ${S.busy ? '<span class="lbl" style="margin-left:auto">받는 중…</span>' : ""}</div>
+      <div class="boxb">
+        <textarea class="q" id="abox" rows="9" placeholder="AI가 준 해석을 여기에 붙여넣으세요">${esc(S.answer)}</textarea>
+        <div class="btnrow">
+          <button class="btn pri" id="saveLog" ${canSave ? "" : "disabled"}>
+            ${S.logEdit ? "기록 수정 저장" : "기록에 저장"}</button>
+          ${S.logEdit ? `<button class="btn" id="cancelLog">수정 취소</button>` : ""}
+          ${!S.logEdit && canSave ? `<button class="btn" id="clearAll">전부 지우기</button>` : ""}
+        </div>
+        <p class="hint">저장하면 <b>기록</b> 탭에 날짜와 함께 쌓입니다. 나중에 다시 읽고 고칠 수 있어요.</p>
+      </div>
     </div>
   </div>`;
   wireRead();
-}
-function thinkingHtml() {
-  return `<div class="thinking"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    <span>카드 자료를 읽고 있습니다… (보통 10~40초)</span></div>`;
-}
-function emptyRead() {
-  return `<div class="empty" style="padding:34px 10px"><b>질문과 카드를 넣어 주세요</b>
-    <span>해석은 첨부하신 키워드·포인트·종합해석만 근거로 삼습니다.<br>정방향/역방향은 구분하지 않습니다.</span></div>`;
 }
 function slotHtml(s, i) {
   const c = BY[s.id];
@@ -1430,8 +1609,27 @@ function slotHtml(s, i) {
 }
 function wireRead() {
   const q = $("#qq");
-  if (q) q.oninput = e => { S.question = e.target.value; };
+  // never re-render while typing — that is what broke Hangul composition before
+  if (q) q.oninput = e => { S.question = e.target.value; syncPrompt(); };
+  const pb = $("#pbox");
+  if (pb) pb.oninput = e => {
+    S.promptEdited = true; S.promptText = e.target.value;
+    const lbl = $("#p-read .boxh .lbl");
+    if (lbl && !lbl.classList.contains("edited")) { lbl.textContent = "직접 고침"; lbl.classList.add("edited"); }
+  };
+  const ab = $("#abox"); if (ab) ab.oninput = e => { S.answer = e.target.value; };
   const add = $("#addCard"); if (add) add.onclick = openPicker;
+  const dd = $("#doDraw"); if (dd) dd.onclick = openDraw;
+  $("#p-read").querySelectorAll("[data-spread]").forEach(b => b.onclick = () => {
+    S.spreadN = +b.dataset.spread;
+    try { localStorage.setItem("tarot.spreadN", S.spreadN); } catch (e) { }
+    renderRead();
+  });
+  $("#p-read").querySelectorAll("[data-drawn]").forEach(b => b.onclick = () => {
+    S.drawN = Math.min(10, Math.max(1, S.drawN + Number(b.dataset.drawn)));
+    try { localStorage.setItem("tarot.drawN", S.drawN); } catch (e) { }
+    renderRead();
+  });
   const cl = $("#clearCards"); if (cl) cl.onclick = () => { S.slots = []; renderRead(); };
   const ug = $("#useGen"); if (ug) ug.onchange = e => {
     S.useGen = e.target.checked;
@@ -1439,31 +1637,192 @@ function wireRead() {
     renderRead();
   };
   $("#p-read").querySelectorAll("[data-del]").forEach(b => b.onclick = () => { S.slots.splice(+b.dataset.del, 1); renderRead(); });
-  $("#p-read").querySelectorAll("[data-pos]").forEach(inp => inp.oninput = e => { S.slots[+inp.dataset.pos].pos = e.target.value; });
+  $("#p-read").querySelectorAll("[data-pos]").forEach(inp => inp.oninput = e => { S.slots[+inp.dataset.pos].pos = e.target.value; syncPrompt(); });
   const cp = $("#copyP"); if (cp) cp.onclick = async () => {
-    try { await navigator.clipboard.writeText(buildPrompt()); cp.textContent = "복사됨 ✓"; setTimeout(() => cp.textContent = "프롬프트 복사", 1600); }
-    catch (e) { S.showPrompt = true; renderRead(); }
+    const t = $("#pbox") ? $("#pbox").value : currentPrompt();
+    try { await navigator.clipboard.writeText(t); cp.textContent = "복사됨 ✓"; }
+    catch (e) { if ($("#pbox")) { $("#pbox").select(); } cp.textContent = "Ctrl+C 로 복사"; }
+    setTimeout(() => cp.textContent = "프롬프트 복사", 1700);
+  };
+  const rp = $("#resetP"); if (rp) rp.onclick = () => { S.promptEdited = false; S.promptText = ""; renderRead(); };
+  const et = $("#editTpl"); if (et) et.onclick = () => {
+    S.dataOpen.tpl = true; S.tab = "data"; renderAll();
+    const box = document.querySelector('[data-dsect="tpl"]'); if (box) box.scrollIntoView({ block: "start" });
   };
   const go = $("#go"); if (go) go.onclick = runSample;
   const st = $("#stop"); if (st) st.onclick = () => { if (ctrl) ctrl.abort(); };
+  const sl = $("#saveLog"); if (sl) sl.onclick = saveReading;
+  const cg = $("#cancelLog"); if (cg) cg.onclick = () => { resetReadForm(); renderAll(); };
+  const ca = $("#clearAll"); if (ca) ca.onclick = () => {
+    if (!confirm("질문·카드·답변을 모두 지울까요? 이미 저장한 기록은 그대로 남습니다.")) return;
+    resetReadForm(); renderRead();
+  };
+}
+/* keep the auto-written prompt in step with the form, without re-rendering the page */
+function syncPrompt() {
+  if (S.promptEdited) return;
+  const pb = $("#pbox");
+  if (pb && document.activeElement !== pb) pb.value = buildPrompt();
+}
+function resetReadForm() {
+  S.question = ""; S.slots = []; S.answer = "";
+  S.promptEdited = false; S.promptText = ""; S.logEdit = null;
+}
+
+/* ---------------- reading journal ---------------- */
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function saveLogLocal() {
+  try { localStorage.setItem("tarot.log", JSON.stringify(S.log)); } catch (e) { }
+}
+function writeLog(entry, removed) {
+  saveLogLocal();
+  if (!DB) return;
+  if (removed) DB.doc("readings/" + removed).delete().catch(() => { });
+  if (entry) DB.doc("readings/" + entry.id).set(entry).catch(() => { });
+}
+function saveReading() {
+  const pb = $("#pbox"), ab = $("#abox"), qq = $("#qq");
+  if (qq) S.question = qq.value;
+  if (ab) S.answer = ab.value;
+  const prompt = pb ? pb.value : currentPrompt();
+  const now = Date.now();
+  if (S.logEdit) {
+    const e = S.log.find(x => x.id === S.logEdit);
+    if (e) {
+      Object.assign(e, { q: S.question, cards: S.slots.map(s => ({ id: s.id, pos: s.pos })), prompt, answer: S.answer, edited: now });
+      writeLog(e);
+    }
+  } else {
+    const e = { id: uid(), at: now, q: S.question, cards: S.slots.map(s => ({ id: s.id, pos: s.pos })), prompt, answer: S.answer, memo: "" };
+    S.log.unshift(e); writeLog(e);
+  }
+  const wasEdit = !!S.logEdit;
+  resetReadForm();
+  S.tab = "log"; renderAll(); window.scrollTo(0, 0);
+  toast(wasEdit ? "기록을 고쳤습니다" : "기록에 저장했습니다");
+}
+function editReading(id) {
+  const e = S.log.find(x => x.id === id); if (!e) return;
+  S.logEdit = id; S.question = e.q || "";
+  S.slots = (e.cards || []).filter(c => BY[c.id]).map(c => ({ id: c.id, pos: c.pos || "" }));
+  S.answer = e.answer || "";
+  S.promptEdited = true; S.promptText = e.prompt || "";
+  S.tab = "read"; renderAll(); window.scrollTo(0, 0);
+}
+function deleteReading(id) {
+  if (!confirm("이 기록을 지울까요? 되돌릴 수 없습니다.")) return;
+  S.log = S.log.filter(x => x.id !== id);
+  writeLog(null, id);
+  renderAll(); toast("기록을 지웠습니다");
+}
+function fmtDate(ms) {
+  const d = new Date(ms);
+  const w = "일월화수목금토"[d.getDay()];
+  return `${d.getFullYear()}. ${d.getMonth() + 1}. ${d.getDate()}. (${w}) ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
+/* shell built once — the search box is never replaced, so Hangul composition survives */
+function renderLog() {
+  const p = $("#p-log");
+  if (!p.dataset.built) {
+    p.innerHTML = `
+      <div class="bar">
+        <label class="search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="lq" type="search" autocomplete="off" placeholder="질문·답변·카드 이름으로 찾기">
+          <span class="lbl" id="lcount"></span>
+        </label>
+        <button class="btn" id="newLog">＋ 새 리딩</button>
+      </div>
+      <div id="loglist"></div>`;
+    p.dataset.built = "1";
+    const li = $("#lq");
+    li.value = S.logQ;
+    li.addEventListener("input", () => { S.logQ = li.value; renderLogList(); });
+    li.addEventListener("search", () => { S.logQ = li.value; renderLogList(); });
+    $("#newLog").onclick = () => { resetReadForm(); S.tab = "read"; renderAll(); window.scrollTo(0, 0); };
+  }
+  renderLogList();
+}
+function renderLogList() {
+  const q = S.logQ.trim().toLowerCase();
+  const list = S.log.filter(e => !q ||
+    (e.q || "").toLowerCase().includes(q) || (e.answer || "").toLowerCase().includes(q) ||
+    (e.memo || "").toLowerCase().includes(q) ||
+    (e.cards || []).some(c => BY[c.id] && label(BY[c.id]).toLowerCase().includes(q)));
+  $("#lcount").textContent = list.length;
+  $("#loglist").innerHTML = list.length ? `<div class="loglist">${list.map(logCard).join("")}</div>`
+    : S.log.length ? `<div class="empty"><b>찾는 기록이 없어요</b><span>검색어를 바꿔보세요.</span></div>`
+      : `<div class="empty">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5.5A1.5 1.5 0 015.5 4H18a2 2 0 012 2v14l-4-2-4 2-4-2-4 2V5.5z"/><path d="M8 9h8M8 13h6"/></svg>
+          <b>아직 쌓인 리딩이 없습니다</b>
+          <span>해석 탭에서 질문과 카드를 넣고 AI 답변을 붙여넣은 뒤<br><b>기록에 저장</b>을 누르면 여기에 날짜별로 쌓입니다.</span>
+          <button class="btn pri" id="goRead" style="margin-top:6px">해석 탭으로 가기</button>
+        </div>`;
+  const gr = $("#goRead"); if (gr) gr.onclick = () => { S.tab = "read"; renderAll(); };
+  $("#p-log").querySelectorAll("[data-logedit]").forEach(b => b.onclick = () => editReading(b.dataset.logedit));
+  $("#p-log").querySelectorAll("[data-logdel]").forEach(b => b.onclick = () => deleteReading(b.dataset.logdel));
+  $("#p-log").querySelectorAll("[data-logcopy]").forEach(b => b.onclick = async () => {
+    const e = S.log.find(x => x.id === b.dataset.logcopy); if (!e) return;
+    const cards = (e.cards || []).map((c, i) => `${i + 1}) ${c.pos ? "[" + c.pos + "] " : ""}${BY[c.id] ? label(BY[c.id]) : c.id}`).join("\n");
+    try {
+      await navigator.clipboard.writeText(`[${fmtDate(e.at)}]\n질문: ${e.q}\n\n뽑은 카드\n${cards}\n\n해석\n${e.answer}`);
+      b.textContent = "복사됨 ✓"; setTimeout(() => b.textContent = "복사", 1600);
+    } catch (err) { b.textContent = "복사 실패"; setTimeout(() => b.textContent = "복사", 1600); }
+  });
+  $("#p-log").querySelectorAll("[data-logmemo]").forEach(t => t.oninput = () => {
+    const e = S.log.find(x => x.id === t.dataset.logmemo); if (!e) return;
+    e.memo = t.value; clearTimeout(t._t); t._t = setTimeout(() => writeLog(e), 500);
+  });
+  $("#p-log").querySelectorAll("details[data-logid]").forEach(d =>
+    d.addEventListener("toggle", () => { S.logOpen[d.dataset.logid] = d.open; }));
+  wireCommon($("#p-log"));
+}
+function logCard(e) {
+  const cards = (e.cards || []).filter(c => BY[c.id]);
+  const long = (e.answer || "").length > 420;
+  const open = S.logOpen[e.id] !== undefined ? S.logOpen[e.id] : !long;
+  return `<article class="logentry">
+    <div class="loghead">
+      <time>${esc(fmtDate(e.at))}${e.edited ? " · 고침" : ""}</time>
+      <div class="logacts">
+        <button class="mini" data-logcopy="${e.id}">복사</button>
+        <button class="mini" data-logedit="${e.id}">편집</button>
+        <button class="mini danger" data-logdel="${e.id}">삭제</button>
+      </div>
+    </div>
+    <h3 class="logq">${esc(e.q || "(질문 없음)")}</h3>
+    ${cards.length ? `<div class="logcards">${cards.map(c => `
+      <button class="logcard" data-open="${c.id}" title="${esc(label(BY[c.id]))}">
+        <img src="${IMG[c.id]}" alt="${esc(label(BY[c.id]))}">
+        <span>${c.pos ? esc(c.pos) + " · " : ""}${esc(label(BY[c.id]))}</span>
+      </button>`).join("")}</div>` : ""}
+    ${e.answer ? `<details class="acc" data-logid="${e.id}" ${open ? "open" : ""}>
+      <summary>해석 읽기</summary><div class="accbody logans">${md(e.answer)}</div></details>` : ""}
+    <textarea class="logmemo" data-logmemo="${e.id}" rows="2"
+      placeholder="나중에 돌아봤을 때의 메모 — 실제로 어떻게 됐는지 적어 두면 좋아요">${esc(e.memo || "")}</textarea>
+  </article>`;
 }
 
 let ctrl = null;
 async function runSample() {
   if (!SAMPLE || S.busy) return;
-  S.busy = true; S.result = ""; renderRead();
+  const prompt = $("#pbox") ? $("#pbox").value : currentPrompt();
+  S.busy = true; S.answer = ""; renderRead();
   ctrl = new AbortController();
   try {
-    await SAMPLE(buildPrompt(), {
+    await SAMPLE(prompt, {
       modelTier: "default", cache: false, signal: ctrl.signal,
-      onText: ({ text }) => { S.result = text; const r = $("#res"); if (r) r.innerHTML = md(text); }
+      onText: ({ text }) => {                       // the answer lands in the box you can edit and save
+        S.answer = text;
+        const a = $("#abox"); if (a && document.activeElement !== a) { a.value = text; a.scrollTop = a.scrollHeight; }
+      }
     });
   } catch (e) {
-    if (e && e.text) S.result = e.text;
+    if (e && e.text) S.answer = e.text;
     const msg = e && e.code === "not_granted" ? "AI 해석 권한이 허용되지 않았습니다. 프롬프트를 복사해서 쓰실 수 있어요."
       : e && e.code === "rate_limited" ? "요청이 몰렸습니다. 잠시 후 다시 눌러 주세요."
         : e && e.code === "cancelled" ? "" : "해석을 받아오지 못했습니다. 다시 시도해 주세요.";
-    if (msg) S.result = (S.result ? S.result + "\n\n" : "") + "**" + msg + "**";
+    if (msg) toast(msg);
   } finally { S.busy = false; ctrl = null; renderRead(); }
 }
 
@@ -1481,6 +1840,77 @@ function md(t) {
   }
   if (inUl) out += "</ul>";
   return out;
+}
+
+/* ---------------- 무작위로 뽑기 ----------------
+   버튼을 누르면 뒷면 카드가 펼쳐지고, 손으로 고른 자리의 카드가 뒤집힙니다. */
+function rnd(n) {
+  if (window.crypto && crypto.getRandomValues) {
+    const a = new Uint32Array(1); crypto.getRandomValues(a);
+    return a[0] % n;
+  }
+  return Math.floor(Math.random() * n);
+}
+function dealSpread() {
+  const used = new Set(S.slots.map(s => s.id));
+  const pool = CARDS.filter(c => !used.has(c.id));
+  const n = Math.min(S.spreadN, pool.length);
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(pool.splice(rnd(pool.length), 1)[0].id);
+  S.draw.spread = out;
+}
+function openDraw() {
+  if (S.slots.length >= CARDS.length) { toast("더 뽑을 카드가 없습니다"); return; }
+  S.draw = { total: Math.min(S.drawN, CARDS.length - S.slots.length), done: 0, spread: [], flip: -1 };
+  dealSpread(); paintDraw();
+}
+function closeDraw() {
+  S.draw = null;
+  const n = document.querySelector(".drawwrap"); if (n) n.remove();
+  renderRead();
+}
+function pickDraw(i) {
+  const d = S.draw; if (!d || d.flip >= 0) return;
+  d.flip = i; paintDraw();
+  const fast = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  setTimeout(() => {
+    if (!S.draw) return;
+    S.slots.push({ id: d.spread[i], pos: "" });
+    d.done++;
+    if (d.done >= d.total) { closeDraw(); toast(d.total + "장을 뽑았습니다"); return; }
+    d.flip = -1; dealSpread(); paintDraw();
+  }, fast ? 260 : 1000);
+}
+function paintDraw() {
+  const d = S.draw; if (!d) return;
+  let n = document.querySelector(".drawwrap");
+  if (!n) { n = el('<div class="drawwrap"></div>'); $("#overlays").appendChild(n); }
+  n.innerHTML = `
+    <div class="drawin">
+      <div class="drawtop">
+        <div>
+          <div class="drawstep">${d.total > 1 ? `${d.done + 1}번째 카드 <span>/ ${d.total}장</span>` : "카드 고르기"}</div>
+          <div class="drawhint">${d.flip >= 0 ? "이 카드로 정해졌습니다" : "마음이 가는 카드를 고르세요"}</div>
+        </div>
+        <button class="iconbtn" id="drawX" aria-label="그만두기"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      ${d.total > 1 ? `<div class="drawbar"><span style="width:${(d.done / d.total) * 100}%"></span></div>` : ""}
+      <div class="fan">${d.spread.map((id, i) => {
+    const c = BY[id], on = d.flip === i, off = d.flip >= 0 && !on;
+    return `<button class="fancard${on ? " flipped" : ""}${off ? " dim" : ""}" data-pick="${i}"
+        style="--tilt:${((i % 3) - 1) * 1.8}deg" ${d.flip >= 0 ? "disabled" : ""}
+        aria-label="${on ? esc(label(c)) : (i + 1) + "번 카드"}">
+        <span class="face back"><i>${i + 1}</i></span>
+        <span class="face front"><img src="${IMG[id]}" alt=""></span>
+      </button>`;
+  }).join("")}</div>
+      <div class="drawname">${d.flip >= 0 ? esc(label(BY[d.spread[d.flip]])) : "&nbsp;"}</div>
+      ${d.done ? `<div class="drawdone">${S.slots.slice(-d.done).map(s =>
+    `<img src="${IMG[s.id]}" alt="${esc(label(BY[s.id]))}" title="${esc(label(BY[s.id]))}">`).join("")}</div>` : ""}
+    </div>`;
+  n.querySelector("#drawX").onclick = closeDraw;
+  n.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => pickDraw(+b.dataset.pick));
+  n.onclick = e => { if (e.target === n && S.draw && S.draw.flip < 0) closeDraw(); };
 }
 
 /* ---------------- picker ---------------- */
@@ -1528,6 +1958,7 @@ function renderAll() {
   if (S.tab === "fav") renderFav();
   if (S.tab === "study") renderStudy();
   if (S.tab === "read") renderRead();
+  if (S.tab === "log") renderLog();
   if (S.tab === "data") renderData();
   paintThemeBtn();
 }
@@ -1544,6 +1975,7 @@ renderAll();
 $("#themeBtn").onclick = () => applyTheme(currentTheme() === "dark" ? "light" : "dark");
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
+  if (S.draw) { if (S.draw.flip < 0) closeDraw(); return; }
   const ov = $("#overlays").lastElementChild;
   if (ov) { ov.remove(); return; }
   if (S.editing) { if (leaveEdit()) renderAll(); return; }
@@ -1585,6 +2017,41 @@ window.addEventListener("beforeunload", e => {
         }
         if (JSON.stringify(next) === JSON.stringify(OV)) return;
         OV = next; saveOvLocal(); rebuild(); renderAll();
+      }, () => { });
+      let firstTplSync = true;
+      DB.doc("prefs/prompt").onSnapshot(snap => {
+        const d = snap.exists ? snap.data() : null;
+        if (!d) { if (firstTplSync && tplChanged()) saveTpl(); firstTplSync = false; return; }
+        firstTplSync = false;
+        const before = JSON.stringify(TPL);
+        applyTpl(d);
+        if (JSON.stringify(TPL) !== before) {
+          try { localStorage.setItem("tarot.tpl", JSON.stringify(TPL)); } catch (e) { }
+          renderAll();
+        }
+      }, () => { });
+      let firstLogSync = true;
+      DB.collection("readings").onSnapshot(snap => {
+        const next = [];
+        snap.docs.forEach(d => {
+          const r = d.data() || {};
+          next.push({
+            id: d.id, at: Number(r.at) || 0, q: String(r.q || ""),
+            cards: Array.isArray(r.cards) ? r.cards : [], prompt: String(r.prompt || ""),
+            answer: String(r.answer || ""), memo: String(r.memo || ""),
+            ...(r.edited ? { edited: Number(r.edited) } : {})
+          });
+        });
+        if (firstLogSync) {
+          firstLogSync = false;
+          const have = new Set(next.map(e => e.id));
+          S.log.filter(e => !have.has(e.id)).forEach(e => {   // written before sign-in — push up, never drop
+            next.push(e); DB.doc("readings/" + e.id).set(e).catch(() => { });
+          });
+        }
+        next.sort((a, b) => b.at - a.at);
+        if (JSON.stringify(next) === JSON.stringify(S.log)) return;
+        S.log = next; saveLogLocal(); renderAll();
       }, () => { });
       DB.doc("prefs/favorites").onSnapshot(snap => {
         const d = snap.exists ? snap.data() : null;
